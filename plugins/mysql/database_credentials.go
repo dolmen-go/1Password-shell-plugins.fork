@@ -56,7 +56,7 @@ func DatabaseCredentials() schema.CredentialType {
 func mysqlConfig(in sdk.ProvisionInput) ([]byte, error) {
 	content := "[client]\n"
 
-	if user, ok := in.ItemFields[fieldname.User]; ok {
+	if user, ok := in.ItemFields[fieldname.User]; ok && user != "" {
 		content += configFileEntry("user", user)
 	}
 
@@ -64,15 +64,15 @@ func mysqlConfig(in sdk.ProvisionInput) ([]byte, error) {
 		content += configFileEntry("password", password)
 	}
 
-	if host, ok := in.ItemFields[fieldname.Host]; ok {
+	if host, ok := in.ItemFields[fieldname.Host]; ok && host != "" {
 		content += configFileEntry("host", host)
 	}
 
-	if port, ok := in.ItemFields[fieldname.Port]; ok {
+	if port, ok := in.ItemFields[fieldname.Port]; ok && port != "" {
 		content += configFileEntry("port", port)
 	}
 
-	if database, ok := in.ItemFields[fieldname.Database]; ok {
+	if database, ok := in.ItemFields[fieldname.Database]; ok && database != "" {
 		content += configFileEntry("database", database)
 	}
 

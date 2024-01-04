@@ -56,6 +56,24 @@ func TestDatabaseCredentialsProvisioner(t *testing.T) {
 				},
 			},
 		},
+		"temp file no port": {
+			ItemFields: map[sdk.FieldName]string{
+				fieldname.User:     "root2",
+				fieldname.Password: "123456",
+				fieldname.Database: "test",
+				fieldname.Host:     "localhost",
+				// fieldname.Port:     "",
+			},
+			CommandLine: []string{"mysql"},
+			ExpectedOutput: sdk.ProvisionOutput{
+				CommandLine: []string{"mysql", "--defaults-file=/tmp/my.cnf"},
+				Files: map[string]sdk.OutputFile{
+					"/tmp/my.cnf": {
+						Contents: []byte(plugintest.LoadFixture(t, "mysql-no-port.cnf")),
+					},
+				},
+			},
+		},
 	})
 }
 
